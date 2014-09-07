@@ -30,16 +30,6 @@ public class ThumbTowerMenu implements Screen {
 		newGame = new BasicButton(new Texture("button-new-game.png"), new Texture("button-new-game.png"), ThumbTower.SCREEN_WIDTH / 2.0f, ThumbTower.SCREEN_HEIGHT / 2.0f);
 		
 		newGame.addListener(new ScreenSwitchListener(game, new ThumbTowerGame(game)));
-		newGame.addListener(new InputListener(){
-			
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				
-				super.touchUp(event, x, y, pointer, button);
-				
-				Gdx.app.log(ThumbTower.TAG, "Clicked!");
-			}
-		});
 		
 		menu.addActor(newGame);
 		
@@ -48,7 +38,7 @@ public class ThumbTowerMenu implements Screen {
 	
 	@Override
 	public void render(float delta) {
-
+		
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		menu.act(Gdx.graphics.getDeltaTime());
