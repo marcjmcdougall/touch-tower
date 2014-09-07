@@ -13,7 +13,7 @@ public class ThumbTowerMenu implements Screen {
 
 	private ThumbTower game;
 	
-	private Stage menu;
+	private Stage menuStage;
 	
 	private BasicButton newGame;
 	
@@ -23,14 +23,14 @@ public class ThumbTowerMenu implements Screen {
 		
 		FitViewport viewPort = new FitViewport(ThumbTower.SCREEN_WIDTH, ThumbTower.SCREEN_HEIGHT);
 		
-		menu = new Stage(viewPort);
+		menuStage = new Stage(viewPort);
 		newGame = new BasicButton(new Texture("button-new-game.png"), new Texture("button-new-game.png"), ThumbTower.SCREEN_WIDTH / 2.0f, ThumbTower.SCREEN_HEIGHT / 2.0f);
 		
 		newGame.addListener(new ScreenSwitchListener(game, new ThumbTowerGame(game)));
 		
-		menu.addActor(newGame);
+		menuStage.addActor(newGame);
 		
-		Gdx.input.setInputProcessor(menu);
+		Gdx.input.setInputProcessor(menuStage);
 	}
 	
 	@Override
@@ -38,14 +38,14 @@ public class ThumbTowerMenu implements Screen {
 		
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		menu.act(Gdx.graphics.getDeltaTime());
-		menu.draw();
+		menuStage.act();
+		menuStage.draw();
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		
-		menu.getViewport().update(width, height, true);
+		menuStage.getViewport().update(width, height, true);
 	}
 
 	@Override
@@ -75,6 +75,6 @@ public class ThumbTowerMenu implements Screen {
 	@Override
 	public void dispose() {
 		
-		menu.dispose();
+		menuStage.dispose();
 	}
 }
