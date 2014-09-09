@@ -1,4 +1,4 @@
-package com.marcjmcd.thumbtower.models;
+package com.marcjmcd.thumbtower.models.tiles;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

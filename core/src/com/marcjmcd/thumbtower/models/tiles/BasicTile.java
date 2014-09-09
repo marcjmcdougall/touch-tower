@@ -1,4 +1,4 @@
-package com.marcjmcd.thumbtower.models;
+package com.marcjmcd.thumbtower.models.tiles;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,7 +10,7 @@ import com.marcjmcd.thumbtower.ThumbTower;
 
 public class BasicTile extends Actor{
 
-	public static final float TILE_DIMENSION = 54.0f;
+	public static final float TILE_DIMENSION = 72.0f;
 	
 	private Texture texture;
 	

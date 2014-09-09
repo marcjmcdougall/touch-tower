@@ -1,6 +1,7 @@
 package com.marcjmcd.thumbtower;
 
 import com.badlogic.gdx.Game;
+import com.marcjmcd.thumbtower.views.screens.ThumbTowerMenu;
 
 public class ThumbTower extends Game {
 	

@@ -1,4 +1,4 @@
-package com.marcjmcd.thumbtower;
+package com.marcjmcd.thumbtower.views.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -6,20 +6,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.marcjmcd.thumbtower.ThumbTower;
 import com.marcjmcd.thumbtower.listeners.ScreenSwitchListener;
-import com.marcjmcd.thumbtower.models.BasicButton;
+import com.marcjmcd.thumbtower.models.tiles.BasicButton;
 
 public class ThumbTowerMenu implements Screen {
 
-	private ThumbTower game;
-	
 	private Stage menuStage;
 	
 	private BasicButton newGame;
 	
 	public ThumbTowerMenu(ThumbTower game){
-		
-		this.game = game;
 		
 		FitViewport viewPort = new FitViewport(ThumbTower.SCREEN_WIDTH, ThumbTower.SCREEN_HEIGHT);
 		
