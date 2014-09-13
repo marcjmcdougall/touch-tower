@@ -8,17 +8,18 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.marcjmcd.thumbtower.ThumbTower;
 
-public class BasicTile extends Actor{
+public abstract class BasicTile extends Actor{
 
 	public static final float TILE_DIMENSION = 72.0f;
 	
-	private Texture texture;
+	protected Texture texture;
 	
-	public BasicTile(){
+	public BasicTile(Texture texture){
 		
-		this.texture = new Texture("white-tile.png");
 		this.setWidth(TILE_DIMENSION);
 		this.setHeight(TILE_DIMENSION);
+		
+		this.setTexture(texture);
 		
 		this.addListener(new InputListener() {
 			
@@ -46,5 +47,15 @@ public class BasicTile extends Actor{
 		super.draw(batch, parentAlpha);
 		
 		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+	}
+
+	public Texture getTexture() {
+		
+		return texture;
+	}
+
+	public void setTexture(Texture texture) {
+		
+		this.texture = texture;
 	}
 }

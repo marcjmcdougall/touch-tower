@@ -1,94 +1,99 @@
 package com.marcjmcd.thumbtower.models;
 
 import java.util.Iterator;
-
-import sun.rmi.runtime.NewThreadAction;
+import java.util.Random;
 
 import com.badlogic.gdx.utils.Array;
 import com.marcjmcd.thumbtower.models.tiles.BasicTile;
+import com.marcjmcd.thumbtower.models.tiles.DangerTile;
+import com.marcjmcd.thumbtower.models.tiles.SafeTile;
 
 public class GameMap {
 
-	public static final int MAX_ROWS = 10;
-	public static final int MAX_COLS = 15;
+	public static final int MAX_VISIBLE_ROWS = 10;
+	public static final int MAX_VISIBLE_COLS = 15;
 	
-	private Array<Array<BasicTile>> primaryTiles;
-	private Array<BasicTile> tileColumnBuffer;
+	private Array<Array<BasicTile>> tiles;
+	private Random rand = new Random();
 	
-	// Iterator that moves through the rows of Arrays of basic tiles.  Moves vertically.
-	private Iterator<Array<BasicTile>> tileRowIterator;	
-	
-	// Iterator that will iterate through each row of basic tiles.  Moves horizontally.
-	private Iterator<BasicTile> tileColumnIterator;
-	
-	// Iterator that will iterate through the buffer overflow array.  Moves vertically.
-	private Iterator<BasicTile> tileColumnBufferIterator;
+	private int startIndex;
 	
 	public GameMap(){
 		
-		this.tileColumnBuffer = new Array<BasicTile>();
+		this.startIndex = 0;
 		
 		initializePrimaryTiles();
-		initializeBufferTiles();
+	}
+	
+	/**
+	 * Removes the 5 oldest tile columns.  This should only be called when the game controller knows
+	 * that the tiles will no longer be on screen.
+	 * 
+	 * This method is here to help with memory management.
+	 */
+	public void popOldestTileGroups(){
 		
-		this.tileColumnBufferIterator = tileColumnBuffer.iterator();
+		// Removes the 5 oldest tile columns.
+		tiles.removeRange(startIndex, startIndex + 4);
+		
+		// Updates the start index to point to the new starting point of the Array. 
+		startIndex += 5;
+	}
+	
+	public void pushNewTileGroups(int numberOfGroups){
+		
+		for(int i = 0; i < numberOfGroups; i++){
+			
+			tiles.add(generateColumn());
+		}
 	}
 
 	private void initializePrimaryTiles() {
 		
-		this.primaryTiles = new Array<Array<BasicTile>>(MAX_ROWS);
+		this.tiles = new Array<Array<BasicTile>>();
 		
-		for(int i = 0; i < MAX_ROWS; i++){
+		for(int i = 0; i < MAX_VISIBLE_COLS; i++){
 			
-			Array<BasicTile> newTiles = new Array<BasicTile>(MAX_COLS);
-			
-			for(int j = 0; j < MAX_COLS; j++){
-				
-				newTiles.add(new BasicTile());
-			}
-			
-			primaryTiles.add(newTiles);
+			tiles.add(generateColumn());
 		}
-		
-		// Once the data structure is completely initialized, extract the iterator.
-		this.tileRowIterator = primaryTiles.iterator();
-		
-		// Initialized to null now - it will be reinitialized with each new row extracted from the main array.
-		this.tileColumnIterator = null;
 	}
 	
-	private void initializeBufferTiles() {
-		
-		this.tileColumnBuffer = new Array<BasicTile>(MAX_ROWS);
-		
-		generateColumn();
-	}
+	private Array<BasicTile> generateColumn(){
 
-	private void generateColumn(){
-
-		for(int i = 0; i < MAX_ROWS; i++){
+		Array<BasicTile> newColumn = new Array<BasicTile>(MAX_VISIBLE_ROWS);
+		
+		for(int i = 0; i < MAX_VISIBLE_ROWS; i++){
 			
-			tileColumnBuffer.add(new BasicTile());
+			newColumn.add(generateTile());
 		}
 		
-		// Once the data structure is completely initialized, extract the iterator.
-		this.tileColumnBufferIterator = tileColumnBuffer.iterator();
+		return newColumn;
 	}
 	
-	public void shiftTiles(){
+	private BasicTile generateTile(){
 		
-		// TODO: Implementation.
-		
-		while(tileRowIterator)
+		if(rand.nextInt(2) == 0){
+			
+			return new SafeTile();
+		}
+		else{
+			
+			return new DangerTile();
+		}
 	}
-
+	
 	public Array<Array<BasicTile>> getPrimaryTiles() {
 		
-		return primaryTiles;
+		return tiles;
 	}
 
-	public Array<BasicTile> getColumnBuffer() {
+	public Iterator<Array<BasicTile>> getTileColumnIterator() {
 		
-		return tileColumnBuffer;
+		return tiles.iterator();
+	}
+
+	public Iterator<BasicTile> getTileIterator(int index) {
+		
+		return tiles.get(index).iterator();
 	}
 }
