@@ -78,6 +78,8 @@ public class GameMap {
 	public void shiftTiles(){
 		
 		// TODO: Implementation.
+		
+		while(tileRowIterator)
 	}
 
 	public Array<Array<BasicTile>> getPrimaryTiles() {
