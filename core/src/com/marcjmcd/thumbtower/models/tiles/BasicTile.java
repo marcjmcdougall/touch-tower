@@ -14,10 +14,13 @@ public abstract class BasicTile extends Actor{
 	
 	protected Texture texture;
 	
-	public BasicTile(Texture texture){
+	public BasicTile(Texture texture, float x, float y){
 		
 		this.setWidth(TILE_DIMENSION);
 		this.setHeight(TILE_DIMENSION);
+		
+		this.setX(x);
+		this.setY(y);
 		
 		this.setTexture(texture);
 		

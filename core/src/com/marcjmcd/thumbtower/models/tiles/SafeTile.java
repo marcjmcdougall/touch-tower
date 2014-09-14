@@ -8,9 +8,9 @@ import com.marcjmcd.thumbtower.ThumbTower;
 
 public class SafeTile extends BasicTile {
 
-	public SafeTile(){
+	public SafeTile(float x, float y){
 		
-		super(new Texture("white_tile.png"));
+		super(new Texture("white_tile.png"), x, y);
 		
 		this.addListener(new InputListener() {
 			

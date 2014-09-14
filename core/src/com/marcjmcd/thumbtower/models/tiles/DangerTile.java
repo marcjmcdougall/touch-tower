@@ -8,9 +8,9 @@ import com.marcjmcd.thumbtower.ThumbTower;
 
 public class DangerTile extends BasicTile {
 
-	public DangerTile(){
+	public DangerTile(float x, float y){
 		
-		super(new Texture("blue_tile.png"));
+		super(new Texture("blue_tile.png"), x, y);
 		
 		this.addListener(new InputListener() {
 			

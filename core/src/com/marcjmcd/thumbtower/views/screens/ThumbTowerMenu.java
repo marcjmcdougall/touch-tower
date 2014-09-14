@@ -18,10 +18,10 @@ public class ThumbTowerMenu implements Screen {
 	
 	public ThumbTowerMenu(ThumbTower game){
 		
-		FitViewport viewPort = new FitViewport(ThumbTower.SCREEN_WIDTH, ThumbTower.SCREEN_HEIGHT);
+		FitViewport viewPort = new FitViewport(ThumbTower.VIEWPORT_WIDTH, ThumbTower.VIEWPORT_HEIGHT);
 		
 		menuStage = new Stage(viewPort);
-		newGame = new BasicButton(new Texture("button-new-game.png"), new Texture("button-new-game.png"), ThumbTower.SCREEN_WIDTH / 2.0f, ThumbTower.SCREEN_HEIGHT / 2.0f);
+		newGame = new BasicButton(new Texture("button-new-game.png"), new Texture("button-new-game.png"), ThumbTower.VIEWPORT_WIDTH / 2.0f, ThumbTower.VIEWPORT_HEIGHT / 2.0f);
 		
 		newGame.addListener(new ScreenSwitchListener(game, new ThumbTowerGame(game)));
 		

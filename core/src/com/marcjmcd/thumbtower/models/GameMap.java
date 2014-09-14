@@ -44,7 +44,7 @@ public class GameMap {
 		
 		for(int i = 0; i < numberOfGroups; i++){
 			
-			tiles.add(generateColumn());
+			tiles.add(generateColumn(MAX_VISIBLE_COLS + i));
 		}
 	}
 
@@ -54,31 +54,31 @@ public class GameMap {
 		
 		for(int i = 0; i < MAX_VISIBLE_COLS; i++){
 			
-			tiles.add(generateColumn());
+			tiles.add(generateColumn(i));
 		}
 	}
 	
-	private Array<BasicTile> generateColumn(){
+	private Array<BasicTile> generateColumn(int columnReference){
 
 		Array<BasicTile> newColumn = new Array<BasicTile>(MAX_VISIBLE_ROWS);
 		
 		for(int i = 0; i < MAX_VISIBLE_ROWS; i++){
 			
-			newColumn.add(generateTile());
+			newColumn.add(generateTile(columnReference, i));
 		}
 		
 		return newColumn;
 	}
 	
-	private BasicTile generateTile(){
+	private BasicTile generateTile(int column, int row){
 		
 		if(rand.nextInt(2) == 0){
 			
-			return new SafeTile();
+			return new SafeTile(column * BasicTile.TILE_DIMENSION, row * BasicTile.TILE_DIMENSION);
 		}
 		else{
 			
-			return new DangerTile();
+			return new DangerTile(column * BasicTile.TILE_DIMENSION, row * BasicTile.TILE_DIMENSION);
 		}
 	}
 	
