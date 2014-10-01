@@ -5,16 +5,17 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.marcjmcd.thumbtower.ThumbStage;
 import com.marcjmcd.thumbtower.ThumbTower;
+import com.marcjmcd.thumbtower.listeners.GameMapEventListener;
 import com.marcjmcd.thumbtower.models.GameMap;
 import com.marcjmcd.thumbtower.models.tiles.BasicTile;
 
-public class ThumbTowerGame implements Screen {
+public class ThumbTowerGame implements Screen, GameMapEventListener{
 
-	private Stage gameStage;
+	private ThumbStage gameStage;
 	
 	private GameMap map;
 	
@@ -22,7 +23,7 @@ public class ThumbTowerGame implements Screen {
 		
 		FitViewport viewPort = new FitViewport(ThumbTower.VIEWPORT_WIDTH, ThumbTower.VIEWPORT_HEIGHT);
 		
-		gameStage = new Stage(viewPort);
+		gameStage = new ThumbStage(viewPort, this);
 		map = new GameMap();
 		
 		initializeGameMapActors();
@@ -35,7 +36,7 @@ public class ThumbTowerGame implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		gameStage.act(delta);
 		
-		gameStage.getCamera().translate(5, 0, 0);
+		addTileColumns(1);
 		
 		gameStage.draw();
 	}
@@ -73,7 +74,7 @@ public class ThumbTowerGame implements Screen {
 	@Override
 	public void dispose() {
 		
-		// TODO Auto-generated method stub
+		gameStage.dispose();
 	}
 	
 	private void initializeGameMapActors() {
@@ -90,5 +91,29 @@ public class ThumbTowerGame implements Screen {
 				gameStage.addActor(tileIterator.next());
 			}
 		}
+	}
+	
+	public void addTileColumns(int columnCount){
+		
+		map.pushNewTileGroups(columnCount);
+		
+		initializeGameMapActors();
+	}
+	
+	@Override
+	public void onColumnShift() {
+		
+		System.out.println("**Shifting Columns Now**");
+		
+		Array<BasicTile> removedActors =  map.getPrimaryTiles().removeIndex(0);
+		
+		Iterator<BasicTile> removedActorIterator = removedActors.iterator();
+		
+		while(removedActorIterator.hasNext()){
+			
+			removedActorIterator.next().remove();
+		}
+		
+		addTileColumns(1);
 	}
 }

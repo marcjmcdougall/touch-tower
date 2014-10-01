@@ -8,7 +8,7 @@ import com.marcjmcd.thumbtower.models.tiles.BasicTile;
 import com.marcjmcd.thumbtower.models.tiles.DangerTile;
 import com.marcjmcd.thumbtower.models.tiles.SafeTile;
 
-public class GameMap {
+public class GameMap{
 
 	public static final int MAX_VISIBLE_ROWS = 10;
 	public static final int MAX_VISIBLE_COLS = 15;
@@ -44,7 +44,7 @@ public class GameMap {
 		
 		for(int i = 0; i < numberOfGroups; i++){
 			
-			tiles.add(generateColumn(MAX_VISIBLE_COLS + i));
+			tiles.add(generateColumn());
 		}
 	}
 
@@ -52,33 +52,45 @@ public class GameMap {
 		
 		this.tiles = new Array<Array<BasicTile>>();
 		
-		for(int i = 0; i < MAX_VISIBLE_COLS; i++){
+		Array<BasicTile> firstColumn = new Array<BasicTile>();
+		
+		for(int i = 0; i < MAX_VISIBLE_ROWS; i++){
 			
-			tiles.add(generateColumn(i));
+			firstColumn.add(new SafeTile(0, i * BasicTile.TILE_DIMENSION));
+		}
+		
+		tiles.add(firstColumn);
+		
+		for(int i = 0; i < MAX_VISIBLE_COLS - 1; i++){
+			
+			tiles.add(generateColumn());
 		}
 	}
 	
-	private Array<BasicTile> generateColumn(int columnReference){
+	private Array<BasicTile> generateColumn(){
 
 		Array<BasicTile> newColumn = new Array<BasicTile>(MAX_VISIBLE_ROWS);
 		
 		for(int i = 0; i < MAX_VISIBLE_ROWS; i++){
 			
-			newColumn.add(generateTile(columnReference, i));
+			newColumn.add(generateNewTile(i));
 		}
 		
 		return newColumn;
 	}
 	
-	private BasicTile generateTile(int column, int row){
+	private BasicTile generateNewTile(int row){
+		
+		Array<BasicTile> lastColumn = tiles.peek();
+		BasicTile lastTile = lastColumn.get(row);
 		
 		if(rand.nextInt(2) == 0){
 			
-			return new SafeTile(column * BasicTile.TILE_DIMENSION, row * BasicTile.TILE_DIMENSION);
+			return new SafeTile(lastTile.getX() + BasicTile.TILE_DIMENSION, lastTile.getY());
 		}
 		else{
 			
-			return new DangerTile(column * BasicTile.TILE_DIMENSION, row * BasicTile.TILE_DIMENSION);
+			return new DangerTile(lastTile.getX() + BasicTile.TILE_DIMENSION, lastTile.getY());
 		}
 	}
 	
