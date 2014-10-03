@@ -19,6 +19,8 @@ public class ThumbTowerGame implements Screen, GameMapEventListener{
 	
 	private GameMap map;
 	
+	private int count = 0;
+	
 	public ThumbTowerGame(ThumbTower game) {
 		
 		FitViewport viewPort = new FitViewport(ThumbTower.VIEWPORT_WIDTH, ThumbTower.VIEWPORT_HEIGHT);
@@ -35,8 +37,6 @@ public class ThumbTowerGame implements Screen, GameMapEventListener{
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		gameStage.act(delta);
-		
-		addTileColumns(1);
 		
 		gameStage.draw();
 	}
@@ -80,7 +80,10 @@ public class ThumbTowerGame implements Screen, GameMapEventListener{
 	private void initializeGameMapActors() {
 		
 		Iterator<Array<BasicTile>> columnIterator = map.getTileColumnIterator();
+		
 		Iterator<BasicTile> tileIterator = null;
+		
+		int count = 0;
 		
 		while(columnIterator.hasNext()){
 			
@@ -89,21 +92,33 @@ public class ThumbTowerGame implements Screen, GameMapEventListener{
 			while(tileIterator.hasNext()){
 				
 				gameStage.addActor(tileIterator.next());
+				
+				System.out.println("Adding Tile: "+ count++);
 			}
 		}
 	}
 	
 	public void addTileColumns(int columnCount){
 		
-		map.pushNewTileGroups(columnCount);
+		Array<Array<BasicTile>> newTiles = map.pushNewTileGroups(columnCount);
 		
-		initializeGameMapActors();
+		Iterator<Array<BasicTile>> newTilesGroupIterator = newTiles.iterator();
+		
+		while(newTilesGroupIterator.hasNext()){
+			
+			Iterator<BasicTile> tileIterator = newTilesGroupIterator.next().iterator();
+			
+			while(tileIterator.hasNext()){
+				
+				gameStage.addActor(tileIterator.next());
+			}
+		}
 	}
 	
 	@Override
 	public void onColumnShift() {
 		
-		System.out.println("**Shifting Columns Now**");
+		System.out.println("**Shifting Columns Now (" + gameStage.getActors().size + ") **");
 		
 		Array<BasicTile> removedActors =  map.getPrimaryTiles().removeIndex(0);
 		

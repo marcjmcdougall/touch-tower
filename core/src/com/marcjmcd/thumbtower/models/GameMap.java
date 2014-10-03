@@ -40,12 +40,17 @@ public class GameMap{
 		startIndex += 5;
 	}
 	
-	public void pushNewTileGroups(int numberOfGroups){
+	public Array<Array<BasicTile>> pushNewTileGroups(int numberOfGroups){
+		
+		Array<Array<BasicTile>> newTiles = new Array<Array<BasicTile>>(); 
 		
 		for(int i = 0; i < numberOfGroups; i++){
 			
-			tiles.add(generateColumn());
+			newTiles.add(generateColumn());
+			tiles.add(newTiles.get(i));
 		}
+		
+		return newTiles;
 	}
 
 	private void initializePrimaryTiles() {

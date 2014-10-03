@@ -9,7 +9,8 @@ public class ThumbStage extends Stage{
 
 	// Velocity of the board in units per second.  The width of the ViewPort is 1080,
 	// therefore a velocity of 1080 would clear the screen in one second.
-	private static final float DEFAULT_VELOCITY = 108.0f;
+//	private static final float DEFAULT_VELOCITY = 108.0f;
+	private static final float DEFAULT_VELOCITY = 360.0f;
 	
 	private float velocityX;
 	private float effectiveDelta;
